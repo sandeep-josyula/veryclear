@@ -47,7 +47,7 @@ class _AppLandingPageState extends State<AppLandingPage> {
                       padding: MediaQuery.of(context).viewInsets,
                       child: Container(
                         width: double.infinity,
-                        height: 300,
+                        height: 400,
                         child: Form(
                           key: _formKey,
                           child: Padding(
@@ -116,7 +116,6 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                   children: [
                                     Expanded(
                                       child: TextFormField(
-                                        
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
                                             return 'Quantity required';
@@ -143,7 +142,7 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                       ),
                                     ),
                                     const DropdownMenu(
-                                      enableSearch: false,
+                                    
                                       requestFocusOnTap: false,
                                       label: Text('Unit'),
                                       inputDecorationTheme:

@@ -1,7 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:veryclear/displayitem.dart';
+
+// TODO: After a user submits an item, the values of the field should be cleared
 
 void main() {
   runApp(const MyApp());
+}
+
+class ItemToCompare {
+  final String description;
+  final String cost;
+  final String quantity;
+  final String unit;
+  final String multiplier;
+  final String category;
+  final double perunitprice;
+
+  ItemToCompare(this.description, this.cost, this.quantity, this.unit,
+      this.multiplier, this.category, this.perunitprice);
 }
 
 class MyApp extends StatelessWidget {
@@ -13,8 +30,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue.shade900),
         useMaterial3: true,
+        textTheme: GoogleFonts.spaceMonoTextTheme(),
       ),
       home: const AppLandingPage(),
     );
@@ -51,12 +69,14 @@ class _AppLandingPageState extends State<AppLandingPage> {
     super.dispose();
   }
 
+  List<ItemToCompare> listOfItemsToCompare = [];
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
+        appBar: AppBar(
           // leading: const Icon(
           //   Icons.wb_sunny_outlined,
           //   color: Colors.redAccent
@@ -89,7 +109,7 @@ class _AppLandingPageState extends State<AppLandingPage> {
                             key: _formKey,
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(
-                                  20.0, 8.0, 20.0, 8.0),
+                                  16.0, 8.0, 16.0, 8.0),
                               child: Column(
                                 children: [
                                   TextFormField(
@@ -277,15 +297,15 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                         ),
                                         dropdownMenuEntries: const [
                                           DropdownMenuEntry(
-                                            value: 'Ounce',
+                                            value: 'Vegetables',
                                             label: 'Vegetables',
                                           ),
                                           DropdownMenuEntry(
-                                            value: 'Gram',
+                                            value: 'Eggs',
                                             label: 'Eggs',
                                           ),
                                           DropdownMenuEntry(
-                                            value: 'Pound',
+                                            value: 'Pasta',
                                             label: 'Pasta',
                                           )
                                         ],
@@ -301,9 +321,31 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                         print(descriptionController.text);
                                         print(costController.text);
                                         print(quantityController.text);
-                                        print(itemMultiplierController.text);
                                         print(unitSelected);
+                                        print(itemMultiplierController.text);
                                         print(categorySelected);
+                                        print(double.parse(
+                                                costController.text) /
+                                            double.parse(costController.text));
+                                        setState(() {
+                                          listOfItemsToCompare.add(
+                                              ItemToCompare(
+                                                  descriptionController.text,
+                                                  costController.text,
+                                                  quantityController.text,
+                                                  unitSelected,
+                                                  itemMultiplierController.text,
+                                                  categorySelected,
+                                                  double.parse(
+                                                          costController.text) /
+                                                      double.parse(
+                                                          quantityController
+                                                              .text)));
+                                        });
+
+                                        print(listOfItemsToCompare);
+
+                                        Navigator.pop(context);
                                       },
                                       label: Text('Add Item to compare'),
                                       icon: const Icon(
@@ -324,7 +366,21 @@ class _AppLandingPageState extends State<AppLandingPage> {
               ),
             ),
           ],
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary),
-    );
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        ),
+        body: ListView.builder(
+            itemCount: listOfItemsToCompare.length,
+            shrinkWrap: true,
+            itemBuilder: (BuildContext context, int index) {
+              return DisplayItem(
+                itemdescription: listOfItemsToCompare[index].description,
+                itemCost: listOfItemsToCompare[index].cost,
+                itemQuantity: listOfItemsToCompare[index].quantity,
+                itemUnit: listOfItemsToCompare[index].unit,
+                itemMultiplier: listOfItemsToCompare[index].multiplier,
+                itemCategory: listOfItemsToCompare[index].category,
+                itemPerUnitPrice: listOfItemsToCompare[index].perunitprice,
+              );
+            }));
   }
 }

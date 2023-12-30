@@ -69,6 +69,16 @@ class _AppLandingPageState extends State<AppLandingPage> {
     super.dispose();
   }
 
+  void clearAddItemFields() {
+    descriptionController.clear();
+    costController.clear();
+    quantityController.clear();
+    unitSelectionController.clear();
+    itemMultiplierController.clear();
+    categorySelectionController.clear();
+  }
+
+  // This is the list that will hold the items user wants to compare.
   List<ItemToCompare> listOfItemsToCompare = [];
 
   @override
@@ -317,16 +327,16 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                         40, 10, 40, 10),
                                     child: ElevatedButton.icon(
                                       onPressed: () {
-                                        print("--- New Item Added ---");
-                                        print(descriptionController.text);
-                                        print(costController.text);
-                                        print(quantityController.text);
-                                        print(unitSelected);
-                                        print(itemMultiplierController.text);
-                                        print(categorySelected);
-                                        print(double.parse(
-                                                costController.text) /
-                                            double.parse(costController.text));
+                                        // print("--- New Item Added ---");
+                                        // print(descriptionController.text);
+                                        // print(costController.text);
+                                        // print(quantityController.text);
+                                        // print(unitSelected);
+                                        // print(itemMultiplierController.text);
+                                        // print(categorySelected);
+                                        // print(double.parse(
+                                        //         costController.text) /
+                                        //     double.parse(costController.text));
                                         setState(() {
                                           listOfItemsToCompare.add(
                                               ItemToCompare(
@@ -336,18 +346,20 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                                   unitSelected,
                                                   itemMultiplierController.text,
                                                   categorySelected,
-                                                  double.parse(
-                                                          costController.text) /
-                                                      double.parse(
-                                                          quantityController
-                                                              .text)));
+                                                  double.parse((double.parse(
+                                                              costController
+                                                                  .text) /
+                                                          double.parse(
+                                                              quantityController
+                                                                  .text))
+                                                      .toStringAsFixed(4))));
                                         });
 
-                                        print(listOfItemsToCompare);
-
+                                        // print(listOfItemsToCompare);
+                                        clearAddItemFields();
                                         Navigator.pop(context);
                                       },
-                                      label: Text('Add Item to compare'),
+                                      label: const Text('Add Item to compare'),
                                       icon: const Icon(
                                         Icons.add_circle_outlined,
                                         color: Colors.black,
@@ -369,6 +381,7 @@ class _AppLandingPageState extends State<AppLandingPage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         ),
         body: ListView.builder(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             itemCount: listOfItemsToCompare.length,
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {

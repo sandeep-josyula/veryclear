@@ -22,24 +22,30 @@ class DisplayItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
       child: Container(
         decoration: BoxDecoration(
-            border: Border.all(),
+            border: Border.all(
+                color: Theme.of(context).colorScheme.inversePrimary,
+                width: 3.0,
+                style: BorderStyle.solid),
             borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(10),
-                bottomLeft: Radius.circular(10))),
+              topRight: Radius.circular(8),
+              bottomLeft: Radius.circular(8),
+            )),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
                   child: Text(
                     itemdescription,
                     textAlign: TextAlign.center,
                     style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.bold,
                       fontSize: 20.0,
                     ),
                   ),
@@ -75,14 +81,16 @@ class DisplayItem extends StatelessWidget {
                 ),
               ],
             ),
-            const Divider(
-              color: Colors.grey,
-              indent: 8.0,
-              endIndent: 8.0,
-            ),
+            // const Divider(
+            //   color: Colors.grey,
+            //   indent: 48.0,
+            //   endIndent: 48.0,
+            // ),
             Padding(
-              padding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+              padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,6 +105,15 @@ class DisplayItem extends StatelessWidget {
                         'Type  : $itemCategory',
                       )
                     ],
+                  ),
+                  IconButton(
+                    visualDensity: VisualDensity.comfortable,
+                    color: Theme.of(context).colorScheme.error,
+                    iconSize: 30,
+                    icon: const Icon(Icons.delete_forever_outlined),
+                    onPressed: () {
+                      print("deleting");
+                    },
                   ),
                 ],
               ),

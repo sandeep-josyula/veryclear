@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class DisplayItem extends StatelessWidget {
+  final int itemRank;
   final String itemdescription;
+  final int relativeDifference;
   final String itemCost;
   final String itemQuantity;
   final String itemUnit;
@@ -11,6 +13,8 @@ class DisplayItem extends StatelessWidget {
 
   const DisplayItem(
       {super.key,
+      required this.itemRank,
+      required this.relativeDifference,
       required this.itemdescription,
       required this.itemCost,
       required this.itemQuantity,
@@ -58,22 +62,33 @@ class DisplayItem extends StatelessWidget {
                       borderRadius:
                           const BorderRadius.vertical(top: Radius.circular(10)),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            'Rank -',
+                          const Text(
+                            'Rank',
                             style: TextStyle(
                               fontSize: 12,
                             ),
                           ),
                           Text(
-                            '3231',
-                            style: TextStyle(
+                            '$itemRank',
+                            style: const TextStyle(
                               fontSize: 25,
                             ),
-                          )
+                          ),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.arrow_upward_outlined,
+                                color: Colors.red,
+                              ),
+                              Text('$relativeDifference%'),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -103,7 +118,7 @@ class DisplayItem extends StatelessWidget {
                       ),
                       Text(
                         'Type  : $itemCategory',
-                      )
+                      ),
                     ],
                   ),
                   IconButton(

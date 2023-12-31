@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:veryclear/displayitem.dart';
 
-// TODO: After a user submits an item, the values of the field should be cleared
-
 void main() {
   runApp(const MyApp());
 }
@@ -16,9 +14,11 @@ class ItemToCompare {
   final String multiplier;
   final String category;
   final double perunitprice;
+  final double relativeDifference;
 
   ItemToCompare(this.description, this.cost, this.quantity, this.unit,
-      this.multiplier, this.category, this.perunitprice);
+      this.multiplier, this.category, this.perunitprice,
+      {this.relativeDifference = 0.0});
 }
 
 class MyApp extends StatelessWidget {
@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue.shade900),
@@ -112,6 +113,7 @@ class _AppLandingPageState extends State<AppLandingPage> {
                     builder: (BuildContext context) {
                       return Padding(
                         padding: MediaQuery.of(context).viewInsets,
+                        // ignore: sized_box_for_whitespace
                         child: Container(
                           width: double.infinity,
                           height: screenHeight * 0.50,
@@ -355,7 +357,12 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                                       .toStringAsFixed(4))));
                                         });
 
-                                        // print(listOfItemsToCompare);
+                                        // Sort items by the perunitprice property
+                                        listOfItemsToCompare.sort((a, b) => a
+                                            .perunitprice
+                                            .compareTo(b.perunitprice));
+
+                                        // Clear the "Add Item" form fields
                                         clearAddItemFields();
                                         Navigator.pop(context);
                                       },
@@ -386,6 +393,13 @@ class _AppLandingPageState extends State<AppLandingPage> {
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
               return DisplayItem(
+                itemRank: index + 1,
+                relativeDifference: 
+                    (((listOfItemsToCompare[index].perunitprice -
+                                    listOfItemsToCompare[0].perunitprice) /
+                                listOfItemsToCompare[0].perunitprice) *
+                            100).round()
+                        ,
                 itemdescription: listOfItemsToCompare[index].description,
                 itemCost: listOfItemsToCompare[index].cost,
                 itemQuantity: listOfItemsToCompare[index].quantity,

@@ -394,12 +394,12 @@ class _AppLandingPageState extends State<AppLandingPage> {
             itemBuilder: (BuildContext context, int index) {
               return DisplayItem(
                 itemRank: index + 1,
-                relativeDifference: 
+                relativeDifference:
                     (((listOfItemsToCompare[index].perunitprice -
                                     listOfItemsToCompare[0].perunitprice) /
                                 listOfItemsToCompare[0].perunitprice) *
-                            100).round()
-                        ,
+                            100)
+                        .round(),
                 itemdescription: listOfItemsToCompare[index].description,
                 itemCost: listOfItemsToCompare[index].cost,
                 itemQuantity: listOfItemsToCompare[index].quantity,

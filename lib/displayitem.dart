@@ -43,15 +43,48 @@ class DisplayItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
-                  child: Text(
-                    itemdescription,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
-                    ),
+                  padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
+                            child: Text(
+                              itemdescription,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Price : $itemPerUnitPrice per $itemUnit',
+                          ),
+                          Text(
+                            'Cost  : \$$itemCost for $itemQuantity $itemUnit',
+                          ),
+                          Text(
+                            'Type  : $itemCategory',
+                          ),
+                        ],
+                      ),
+                      // IconButton(
+                      //   visualDensity: VisualDensity.comfortable,
+                      //   color: Theme.of(context).colorScheme.error,
+                      //   iconSize: 30,
+                      //   icon: const Icon(Icons.delete_forever_outlined),
+                      //   onPressed: () {
+                      //     print("deleting");
+                      //   },
+                      // ),
+                    ],
                   ),
                 ),
                 Padding(
@@ -82,8 +115,8 @@ class DisplayItem extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Icon(
-                                Icons.arrow_upward_outlined,
+                              const Icon(
+                                Icons.add_outlined,
                                 color: Colors.red,
                               ),
                               Text('$relativeDifference%'),
@@ -101,38 +134,50 @@ class DisplayItem extends StatelessWidget {
             //   indent: 48.0,
             //   endIndent: 48.0,
             // ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Price : $itemPerUnitPrice per $itemUnit',
-                      ),
-                      Text(
-                        'Cost  : \$$itemCost for $itemQuantity $itemUnit',
-                      ),
-                      Text(
-                        'Type  : $itemCategory',
-                      ),
-                    ],
-                  ),
-                  IconButton(
-                    visualDensity: VisualDensity.comfortable,
-                    color: Theme.of(context).colorScheme.error,
-                    iconSize: 30,
-                    icon: const Icon(Icons.delete_forever_outlined),
-                    onPressed: () {
-                      print("deleting");
-                    },
-                  ),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+            //   child: Row(
+            //     crossAxisAlignment: CrossAxisAlignment.end,
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Column(
+            //         crossAxisAlignment: CrossAxisAlignment.start,
+            //         children: [
+            //           Padding(
+            //             padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
+            //             child: Text(
+            //               itemdescription,
+            //               textAlign: TextAlign.center,
+            //               style: TextStyle(
+            //                 color: Theme.of(context).colorScheme.primary,
+            //                 fontWeight: FontWeight.bold,
+            //                 fontSize: 20.0,
+            //               ),
+            //             ),
+            //           ),
+            //           Text(
+            //             'Price : $itemPerUnitPrice per $itemUnit',
+            //           ),
+            //           Text(
+            //             'Cost  : \$$itemCost for $itemQuantity $itemUnit',
+            //           ),
+            //           Text(
+            //             'Type  : $itemCategory',
+            //           ),
+            //         ],
+            //       ),
+            //       IconButton(
+            //         visualDensity: VisualDensity.comfortable,
+            //         color: Theme.of(context).colorScheme.error,
+            //         iconSize: 30,
+            //         icon: const Icon(Icons.delete_forever_outlined),
+            //         onPressed: () {
+            //           print("deleting");
+            //         },
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

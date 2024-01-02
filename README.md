@@ -14,3 +14,8 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+Shift + Command + K ==> To connect Laptop keyboard.
+
+After running it on the physical device, when attempting to start the app back on simulator
+I had to make ENABLE_USER_SCRIPT_SANDBOXING property value "NO"

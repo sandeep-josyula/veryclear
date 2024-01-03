@@ -86,6 +86,88 @@ class _AppLandingPageState extends State<AppLandingPage> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
 
+    final liquidAndWeightUnits = [
+      'Fluid ounce (fl oz)',
+      'Pint (pt)',
+      'Quart (qt)',
+      'Gallon (gal)',
+      'Ounce (oz)',
+      'Pound (lb)',
+      'Gram (g)',
+      'Kilogram (kg)',
+      'Inch (in)',
+      'Foot (ft)',
+      'Yard (yd)',
+      'Millimeter (mm)',
+      'Centimeter (cm)',
+      'Meter (m)',
+    ];
+
+    final liquidAndWeightUnitsEntries = liquidAndWeightUnits
+        .map((item) => DropdownMenuEntry<String>(
+              value: item,
+              label: item,
+            ))
+        .toList();
+    final groceryItems = [
+      'Bananas',
+      'Apples',
+      'Grapes',
+      'Potatoes',
+      'Carrots',
+      'Onions',
+      'Lettuce',
+      'Tomatoes',
+      'Berries',
+      'Citrus Fruits',
+      'Milk',
+      'Cheese',
+      'Yogurt',
+      'Eggs',
+      'Bread',
+      'Pasta',
+      'Rice',
+      'Tortillas',
+      'Cereal',
+      'Chicken',
+      'Beef',
+      'Pork',
+      'Fish',
+      'Coffee',
+      'Tea',
+      'Soda',
+      'Water',
+      'Juice',
+      'Ketchup',
+      'Mayonnaise',
+      'Mustard',
+      'Salad Dressing',
+      'Hot Sauce',
+      'Chips',
+      'Cookies',
+      'Crackers',
+      'Candy',
+      'Nuts',
+      'Popcorn',
+      'Dish Soap',
+      'Laundry Detergent',
+      'Paper Towels',
+      'Sponges',
+      'Trash Bags',
+      'Toilet Paper',
+      'Toothpaste',
+      'Shampoo',
+      'Soap',
+      'Deodorant'
+    ];
+
+    final dropdowngroceryItemsEntries = groceryItems
+        .map((item) => DropdownMenuEntry<String>(
+              value: item,
+              label: item,
+            ))
+        .toList();
+
     return Scaffold(
       appBar: AppBar(
         // leading: const Icon(
@@ -211,47 +293,29 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                         ),
                                       ),
                                     ),
-                                    DropdownMenu(
-                                      controller: unitSelectionController,
-                                      onSelected: (String? unitValue) {
-                                        setState(() {
-                                          unitSelected = unitValue!;
-                                        });
-                                      },
-                                      enableFilter: true,
-                                      requestFocusOnTap: true,
-                                      leadingIcon: const Icon(
-                                        Icons.search_outlined,
-                                        color: Colors.black,
-                                      ),
-                                      label: const Text('Unit'),
-                                      inputDecorationTheme:
-                                          const InputDecorationTheme(
-                                        border: UnderlineInputBorder(),
-                                      ),
-                                      dropdownMenuEntries: const [
-                                        DropdownMenuEntry(
-                                          value: 'Count',
-                                          label: 'Count',
-                                        ),
-                                        DropdownMenuEntry(
-                                          value: 'Ounce',
-                                          label: 'Ounce',
-                                        ),
-                                        DropdownMenuEntry(
-                                          value: 'Gram',
-                                          label: 'Gram',
-                                        ),
-                                        DropdownMenuEntry(
-                                          value: 'Pound',
-                                          label: 'Pound',
-                                        ),
-                                        DropdownMenuEntry(
-                                          value: 'Gallon',
-                                          label: 'Gallon',
-                                        ),
-                                      ],
-                                    )
+                                    Expanded(
+                                        child: DropdownMenu(
+                                            hintText: 'Type to search',
+                                            menuHeight: 300.0,
+                                            controller: unitSelectionController,
+                                            onSelected: (String? unitValue) {
+                                              setState(() {
+                                                unitSelected = unitValue!;
+                                              });
+                                            },
+                                            enableFilter: true,
+                                            requestFocusOnTap: true,
+                                            leadingIcon: const Icon(
+                                              Icons.search_outlined,
+                                              color: Colors.black,
+                                            ),
+                                            label: const Text('Unit'),
+                                            inputDecorationTheme:
+                                                const InputDecorationTheme(
+                                              border: UnderlineInputBorder(),
+                                            ),
+                                            dropdownMenuEntries:
+                                                liquidAndWeightUnitsEntries)),
                                   ],
                                 ),
                                 Row(
@@ -286,40 +350,30 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                         ),
                                       ),
                                     ),
-                                    DropdownMenu(
-                                      controller: categorySelectionController,
-                                      onSelected: (String? categoryValue) {
-                                        setState(() {
-                                          categorySelected = categoryValue!;
-                                        });
-                                      },
-                                      enableFilter: true,
-                                      requestFocusOnTap: true,
-                                      leadingIcon: const Icon(
-                                        Icons.search_outlined,
-                                        color: Colors.black,
-                                      ),
-                                      label: const Text('Category'),
-                                      inputDecorationTheme:
-                                          const InputDecorationTheme(
-                                        border: UnderlineInputBorder(),
-                                      ),
-                                      dropdownMenuEntries: const [
-                                        DropdownMenuEntry(
-                                          value: 'Vegetables',
-                                          label: 'Vegetables',
-                                        ),
-                                        DropdownMenuEntry(
-                                          value: 'Eggs',
-                                          label: 'Eggs',
-                                        ),
-                                        DropdownMenuEntry(
-                                          value: 'Pasta',
-                                          label: 'Pasta',
-                                        )
-                                      ],
-                                    ),
                                   ],
+                                ),
+                                DropdownMenu(
+                                  hintText: 'Type to search',
+                                  menuHeight: 300.0,
+                                  controller: categorySelectionController,
+                                  onSelected: (String? categoryValue) {
+                                    setState(() {
+                                      categorySelected = categoryValue!;
+                                    });
+                                  },
+                                  enableFilter: true,
+                                  requestFocusOnTap: true,
+                                  leadingIcon: const Icon(
+                                    Icons.search_outlined,
+                                    color: Colors.black,
+                                  ),
+                                  label: const Text('Category'),
+                                  inputDecorationTheme:
+                                      const InputDecorationTheme(
+                                    border: UnderlineInputBorder(),
+                                  ),
+                                  dropdownMenuEntries:
+                                      dropdowngroceryItemsEntries,
                                 ),
                                 Padding(
                                   padding:

@@ -9,7 +9,7 @@ void main() {
 class ItemToCompare {
   final String description;
   final String cost;
-  final String quantity;
+  final double quantity;
   final String unit;
   final String multiplier;
   final String category;
@@ -85,6 +85,89 @@ class _AppLandingPageState extends State<AppLandingPage> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
+
+    final liquidAndWeightUnits = [
+      'Count',
+      'Fl oz',
+      'Pt',
+      'Qt',
+      'Gal',
+      'Oz',
+      'Lb',
+      'g',
+      'Kg',
+      'in',
+      'ft',
+      'Yd',
+      'mm',
+      'cm',
+      'm',
+    ];
+
+    final liquidAndWeightUnitsEntries = liquidAndWeightUnits
+        .map((item) => DropdownMenuEntry<String>(
+              value: item,
+              label: item,
+            ))
+        .toList();
+    final groceryItems = [
+      'Bananas',
+      'Apples',
+      'Grapes',
+      'Potatoes',
+      'Carrots',
+      'Onions',
+      'Lettuce',
+      'Tomatoes',
+      'Berries',
+      'Citrus Fruits',
+      'Milk',
+      'Cheese',
+      'Yogurt',
+      'Eggs',
+      'Bread',
+      'Pasta',
+      'Rice',
+      'Tortillas',
+      'Cereal',
+      'Chicken',
+      'Beef',
+      'Pork',
+      'Fish',
+      'Coffee',
+      'Tea',
+      'Soda',
+      'Water',
+      'Juice',
+      'Ketchup',
+      'Mayonnaise',
+      'Mustard',
+      'Salad Dressing',
+      'Hot Sauce',
+      'Chips',
+      'Cookies',
+      'Crackers',
+      'Candy',
+      'Nuts',
+      'Popcorn',
+      'Dish Soap',
+      'Laundry Detergent',
+      'Paper Towels',
+      'Sponges',
+      'Trash Bags',
+      'Toilet Paper',
+      'Toothpaste',
+      'Shampoo',
+      'Soap',
+      'Deodorant'
+    ];
+
+    final dropdowngroceryItemsEntries = groceryItems
+        .map((item) => DropdownMenuEntry<String>(
+              value: item,
+              label: item,
+            ))
+        .toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -211,47 +294,29 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                         ),
                                       ),
                                     ),
-                                    DropdownMenu(
-                                      controller: unitSelectionController,
-                                      onSelected: (String? unitValue) {
-                                        setState(() {
-                                          unitSelected = unitValue!;
-                                        });
-                                      },
-                                      enableFilter: true,
-                                      requestFocusOnTap: true,
-                                      leadingIcon: const Icon(
-                                        Icons.search_outlined,
-                                        color: Colors.black,
-                                      ),
-                                      label: const Text('Unit'),
-                                      inputDecorationTheme:
-                                          const InputDecorationTheme(
-                                        border: UnderlineInputBorder(),
-                                      ),
-                                      dropdownMenuEntries: const [
-                                        DropdownMenuEntry(
-                                          value: 'Count',
-                                          label: 'Count',
-                                        ),
-                                        DropdownMenuEntry(
-                                          value: 'Ounce',
-                                          label: 'Ounce',
-                                        ),
-                                        DropdownMenuEntry(
-                                          value: 'Gram',
-                                          label: 'Gram',
-                                        ),
-                                        DropdownMenuEntry(
-                                          value: 'Pound',
-                                          label: 'Pound',
-                                        ),
-                                        DropdownMenuEntry(
-                                          value: 'Gallon',
-                                          label: 'Gallon',
-                                        ),
-                                      ],
-                                    )
+                                    Expanded(
+                                        child: DropdownMenu(
+                                            hintText: 'Type to search',
+                                            menuHeight: 300.0,
+                                            controller: unitSelectionController,
+                                            onSelected: (String? unitValue) {
+                                              setState(() {
+                                                unitSelected = unitValue!;
+                                              });
+                                            },
+                                            enableFilter: true,
+                                            requestFocusOnTap: true,
+                                            leadingIcon: const Icon(
+                                              Icons.search_outlined,
+                                              color: Colors.black,
+                                            ),
+                                            label: const Text('Unit'),
+                                            inputDecorationTheme:
+                                                const InputDecorationTheme(
+                                              border: UnderlineInputBorder(),
+                                            ),
+                                            dropdownMenuEntries:
+                                                liquidAndWeightUnitsEntries)),
                                   ],
                                 ),
                                 Row(
@@ -286,70 +351,69 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                         ),
                                       ),
                                     ),
-                                    DropdownMenu(
-                                      controller: categorySelectionController,
-                                      onSelected: (String? categoryValue) {
-                                        setState(() {
-                                          categorySelected = categoryValue!;
-                                        });
-                                      },
-                                      enableFilter: true,
-                                      requestFocusOnTap: true,
-                                      leadingIcon: const Icon(
-                                        Icons.search_outlined,
-                                        color: Colors.black,
-                                      ),
-                                      label: const Text('Category'),
-                                      inputDecorationTheme:
-                                          const InputDecorationTheme(
-                                        border: UnderlineInputBorder(),
-                                      ),
-                                      dropdownMenuEntries: const [
-                                        DropdownMenuEntry(
-                                          value: 'Vegetables',
-                                          label: 'Vegetables',
-                                        ),
-                                        DropdownMenuEntry(
-                                          value: 'Eggs',
-                                          label: 'Eggs',
-                                        ),
-                                        DropdownMenuEntry(
-                                          value: 'Pasta',
-                                          label: 'Pasta',
-                                        )
-                                      ],
-                                    ),
                                   ],
+                                ),
+                                DropdownMenu(
+                                  hintText: 'Type to search',
+                                  menuHeight: 300.0,
+                                  controller: categorySelectionController,
+                                  onSelected: (String? categoryValue) {
+                                    setState(() {
+                                      categorySelected = categoryValue!;
+                                    });
+                                  },
+                                  enableFilter: true,
+                                  requestFocusOnTap: true,
+                                  leadingIcon: const Icon(
+                                    Icons.search_outlined,
+                                    color: Colors.black,
+                                  ),
+                                  label: const Text('Category'),
+                                  inputDecorationTheme:
+                                      const InputDecorationTheme(
+                                    border: UnderlineInputBorder(),
+                                  ),
+                                  dropdownMenuEntries:
+                                      dropdowngroceryItemsEntries,
                                 ),
                                 Padding(
                                   padding:
                                       const EdgeInsets.fromLTRB(40, 10, 40, 10),
                                   child: ElevatedButton.icon(
                                     onPressed: () {
-                                      // print("--- New Item Added ---");
-                                      // print(descriptionController.text);
-                                      // print(costController.text);
-                                      // print(quantityController.text);
-                                      // print(unitSelected);
-                                      // print(itemMultiplierController.text);
-                                      // print(categorySelected);
-                                      // print(double.parse(
-                                      //         costController.text) /
-                                      //     double.parse(costController.text));
+                                      double calculatedQuantity = double.parse(
+                                              quantityController.text) *
+                                          int.parse(
+                                              itemMultiplierController.text);
+                                      double calculatedPerUnitPrice =
+                                          double.parse((double.parse(
+                                                      costController.text) /
+                                                  (double.parse(
+                                                          quantityController
+                                                              .text) *
+                                                      int.parse(
+                                                          itemMultiplierController
+                                                              .text)))
+                                              .toStringAsFixed(4));
                                       setState(() {
-                                        listOfItemsToCompare.add(ItemToCompare(
+                                        listOfItemsToCompare.add(
+                                          ItemToCompare(
+                                            // description
                                             descriptionController.text,
+                                            // cost
                                             costController.text,
-                                            quantityController.text,
+                                            // quantity
+                                            calculatedQuantity,
+                                            // unit
                                             unitSelected,
+                                            // multiplier
                                             itemMultiplierController.text,
+                                            // category
                                             categorySelected,
-                                            double.parse((double.parse(
-                                                        costController.text) /
-                                                    double.parse(
-                                                        quantityController
-                                                            .text))
-                                                .toStringAsFixed(4))));
+                                            // perunitprice
+                                            calculatedPerUnitPrice,
+                                          ),
+                                        );
                                       });
 
                                       // Sort items by the perunitprice property
@@ -413,12 +477,12 @@ class _AppLandingPageState extends State<AppLandingPage> {
               ),
               child: DisplayItem(
                 itemRank: index + 1,
-                relativeDifference:
+                relativeDifference: double.parse(
                     (((listOfItemsToCompare[index].perunitprice -
                                     listOfItemsToCompare[0].perunitprice) /
                                 listOfItemsToCompare[0].perunitprice) *
                             100)
-                        .round(),
+                        .toStringAsFixed(3)),
                 itemdescription: listOfItemsToCompare[index].description,
                 itemCost: listOfItemsToCompare[index].cost,
                 itemQuantity: listOfItemsToCompare[index].quantity,

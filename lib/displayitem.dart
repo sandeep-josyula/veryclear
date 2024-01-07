@@ -29,14 +29,15 @@ class DisplayItem extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
       child: Container(
         decoration: BoxDecoration(
-            border: Border.all(
-                color: Theme.of(context).colorScheme.inversePrimary,
-                width: 3.0,
-                style: BorderStyle.solid),
-            borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(8),
-              bottomLeft: Radius.circular(8),
-            )),
+          border: Border.all(
+              color: Theme.of(context).colorScheme.inversePrimary,
+              width: 3.0,
+              style: BorderStyle.solid),
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(8),
+            bottomLeft: Radius.circular(8),
+          ),
+        ),
         child: Column(
           children: [
             Row(
@@ -75,15 +76,6 @@ class DisplayItem extends StatelessWidget {
                           ),
                         ],
                       ),
-                      // IconButton(
-                      //   visualDensity: VisualDensity.comfortable,
-                      //   color: Theme.of(context).colorScheme.error,
-                      //   iconSize: 30,
-                      //   icon: const Icon(Icons.delete_forever_outlined),
-                      //   onPressed: () {
-                      //     print("deleting");
-                      //   },
-                      // ),
                     ],
                   ),
                 ),

@@ -9,7 +9,7 @@ void main() {
 class ItemToCompare {
   final String description;
   final String cost;
-  final String quantity;
+  final double quantity;
   final String unit;
   final String multiplier;
   final String category;
@@ -87,20 +87,21 @@ class _AppLandingPageState extends State<AppLandingPage> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     final liquidAndWeightUnits = [
-      'Fluid ounce (fl oz)',
-      'Pint (pt)',
-      'Quart (qt)',
-      'Gallon (gal)',
-      'Ounce (oz)',
-      'Pound (lb)',
-      'Gram (g)',
-      'Kilogram (kg)',
-      'Inch (in)',
-      'Foot (ft)',
-      'Yard (yd)',
-      'Millimeter (mm)',
-      'Centimeter (cm)',
-      'Meter (m)',
+      'Count',
+      'Fl oz',
+      'Pt',
+      'Qt',
+      'Gal',
+      'Oz',
+      'Lb',
+      'g',
+      'Kg',
+      'in',
+      'ft',
+      'Yd',
+      'mm',
+      'cm',
+      'm',
     ];
 
     final liquidAndWeightUnitsEntries = liquidAndWeightUnits
@@ -380,30 +381,39 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                       const EdgeInsets.fromLTRB(40, 10, 40, 10),
                                   child: ElevatedButton.icon(
                                     onPressed: () {
-                                      // print("--- New Item Added ---");
-                                      // print(descriptionController.text);
-                                      // print(costController.text);
-                                      // print(quantityController.text);
-                                      // print(unitSelected);
-                                      // print(itemMultiplierController.text);
-                                      // print(categorySelected);
-                                      // print(double.parse(
-                                      //         costController.text) /
-                                      //     double.parse(costController.text));
+                                      double calculatedQuantity = double.parse(
+                                              quantityController.text) *
+                                          int.parse(
+                                              itemMultiplierController.text);
+                                      double calculatedPerUnitPrice =
+                                          double.parse((double.parse(
+                                                      costController.text) /
+                                                  (double.parse(
+                                                          quantityController
+                                                              .text) *
+                                                      int.parse(
+                                                          itemMultiplierController
+                                                              .text)))
+                                              .toStringAsFixed(4));
                                       setState(() {
-                                        listOfItemsToCompare.add(ItemToCompare(
+                                        listOfItemsToCompare.add(
+                                          ItemToCompare(
+                                            // description
                                             descriptionController.text,
+                                            // cost
                                             costController.text,
-                                            quantityController.text,
+                                            // quantity
+                                            calculatedQuantity,
+                                            // unit
                                             unitSelected,
+                                            // multiplier
                                             itemMultiplierController.text,
+                                            // category
                                             categorySelected,
-                                            double.parse((double.parse(
-                                                        costController.text) /
-                                                    double.parse(
-                                                        quantityController
-                                                            .text))
-                                                .toStringAsFixed(4))));
+                                            // perunitprice
+                                            calculatedPerUnitPrice,
+                                          ),
+                                        );
                                       });
 
                                       // Sort items by the perunitprice property
@@ -467,12 +477,12 @@ class _AppLandingPageState extends State<AppLandingPage> {
               ),
               child: DisplayItem(
                 itemRank: index + 1,
-                relativeDifference:
+                relativeDifference: double.parse(
                     (((listOfItemsToCompare[index].perunitprice -
                                     listOfItemsToCompare[0].perunitprice) /
                                 listOfItemsToCompare[0].perunitprice) *
                             100)
-                        .round(),
+                        .toStringAsFixed(3)),
                 itemdescription: listOfItemsToCompare[index].description,
                 itemCost: listOfItemsToCompare[index].cost,
                 itemQuantity: listOfItemsToCompare[index].quantity,

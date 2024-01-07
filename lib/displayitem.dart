@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class DisplayItem extends StatelessWidget {
   final int itemRank;
   final String itemdescription;
-  final int relativeDifference;
+  final double relativeDifference;
   final String itemCost;
-  final String itemQuantity;
+  final double itemQuantity;
   final String itemUnit;
   final String itemMultiplier;
   final String itemCategory;

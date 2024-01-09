@@ -199,7 +199,7 @@ class _AppLandingPageState extends State<AppLandingPage> {
                       // ignore: sized_box_for_whitespace
                       child: Container(
                         width: double.infinity,
-                        height: screenHeight * 0.50,
+                        height: screenHeight * 0.75,
                         child: Form(
                           key: _formKey,
                           child: Padding(
@@ -296,6 +296,7 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                     ),
                                     Expanded(
                                       child: DropdownMenu(
+                                        errorText: 'Unit is Required',
                                         hintText: 'Type to search',
                                         menuHeight: 300.0,
                                         controller: unitSelectionController,
@@ -385,49 +386,52 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                       const EdgeInsets.fromLTRB(40, 10, 40, 10),
                                   child: ElevatedButton.icon(
                                     onPressed: () {
-                                      double calculatedQuantity = double.parse(
-                                              quantityController.text) *
-                                          int.parse(
-                                              itemMultiplierController.text);
-                                      double calculatedPerUnitPrice =
-                                          double.parse((double.parse(
-                                                      costController.text) /
-                                                  (double.parse(
-                                                          quantityController
-                                                              .text) *
-                                                      int.parse(
-                                                          itemMultiplierController
-                                                              .text)))
-                                              .toStringAsFixed(4));
-                                      setState(() {
-                                        listOfItemsToCompare.add(
-                                          ItemToCompare(
-                                            // description
-                                            descriptionController.text,
-                                            // cost
-                                            costController.text,
-                                            // quantity
-                                            calculatedQuantity,
-                                            // unit
-                                            unitSelected,
-                                            // multiplier
-                                            itemMultiplierController.text,
-                                            // category
-                                            categorySelected,
-                                            // perunitprice
-                                            calculatedPerUnitPrice,
-                                          ),
-                                        );
-                                      });
+                                      if (_formKey.currentState!.validate()) {
+                                        double calculatedQuantity = double
+                                                .parse(
+                                                    quantityController.text) *
+                                            int.parse(
+                                                itemMultiplierController.text);
+                                        double calculatedPerUnitPrice =
+                                            double.parse((double.parse(
+                                                        costController.text) /
+                                                    (double.parse(
+                                                            quantityController
+                                                                .text) *
+                                                        int.parse(
+                                                            itemMultiplierController
+                                                                .text)))
+                                                .toStringAsFixed(4));
+                                        setState(() {
+                                          listOfItemsToCompare.add(
+                                            ItemToCompare(
+                                              // description
+                                              descriptionController.text,
+                                              // cost
+                                              costController.text,
+                                              // quantity
+                                              calculatedQuantity,
+                                              // unit
+                                              unitSelected,
+                                              // multiplier
+                                              itemMultiplierController.text,
+                                              // category
+                                              categorySelected,
+                                              // perunitprice
+                                              calculatedPerUnitPrice,
+                                            ),
+                                          );
+                                        });
 
-                                      // Sort items by the perunitprice property
-                                      listOfItemsToCompare.sort((a, b) => a
-                                          .perunitprice
-                                          .compareTo(b.perunitprice));
+                                        // Sort items by the perunitprice property
+                                        listOfItemsToCompare.sort((a, b) => a
+                                            .perunitprice
+                                            .compareTo(b.perunitprice));
 
-                                      // Clear the "Add Item" form fields
-                                      clearAddItemFields();
-                                      Navigator.pop(context);
+                                        // Clear the "Add Item" form fields
+                                        clearAddItemFields();
+                                        Navigator.pop(context);
+                                      }
                                     },
                                     label: const Text('Add Item to compare'),
                                     icon: const Icon(

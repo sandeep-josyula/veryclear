@@ -296,7 +296,6 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                     ),
                                     Expanded(
                                       child: DropdownMenu(
-                                        errorText: 'Unit is Required',
                                         hintText: 'Type to search',
                                         menuHeight: 300.0,
                                         controller: unitSelectionController,

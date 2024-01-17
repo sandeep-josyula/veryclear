@@ -199,7 +199,7 @@ class _AppLandingPageState extends State<AppLandingPage> {
                       // ignore: sized_box_for_whitespace
                       child: Container(
                         width: double.infinity,
-                        height: screenHeight * 0.50,
+                        height: screenHeight * 0.75,
                         child: Form(
                           key: _formKey,
                           child: Padding(
@@ -295,28 +295,30 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                       ),
                                     ),
                                     Expanded(
-                                        child: DropdownMenu(
-                                            hintText: 'Type to search',
-                                            menuHeight: 300.0,
-                                            controller: unitSelectionController,
-                                            onSelected: (String? unitValue) {
-                                              setState(() {
-                                                unitSelected = unitValue!;
-                                              });
-                                            },
-                                            enableFilter: true,
-                                            requestFocusOnTap: true,
-                                            leadingIcon: const Icon(
-                                              Icons.search_outlined,
-                                              color: Colors.black,
-                                            ),
-                                            label: const Text('Unit'),
-                                            inputDecorationTheme:
-                                                const InputDecorationTheme(
-                                              border: UnderlineInputBorder(),
-                                            ),
-                                            dropdownMenuEntries:
-                                                liquidAndWeightUnitsEntries)),
+                                      child: DropdownMenu(
+                                        hintText: 'Type to search',
+                                        menuHeight: 300.0,
+                                        controller: unitSelectionController,
+                                        onSelected: (String? unitValue) {
+                                          setState(() {
+                                            unitSelected = unitValue!;
+                                          });
+                                        },
+                                        enableFilter: true,
+                                        requestFocusOnTap: true,
+                                        leadingIcon: const Icon(
+                                          Icons.search_outlined,
+                                          color: Colors.black,
+                                        ),
+                                        label: const Text('Unit'),
+                                        inputDecorationTheme:
+                                            const InputDecorationTheme(
+                                          border: UnderlineInputBorder(),
+                                        ),
+                                        dropdownMenuEntries:
+                                            liquidAndWeightUnitsEntries,
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 Row(
@@ -358,9 +360,11 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                   menuHeight: 300.0,
                                   controller: categorySelectionController,
                                   onSelected: (String? categoryValue) {
-                                    setState(() {
-                                      categorySelected = categoryValue!;
-                                    });
+                                    setState(
+                                      () {
+                                        categorySelected = categoryValue!;
+                                      },
+                                    );
                                   },
                                   enableFilter: true,
                                   requestFocusOnTap: true,
@@ -381,49 +385,52 @@ class _AppLandingPageState extends State<AppLandingPage> {
                                       const EdgeInsets.fromLTRB(40, 10, 40, 10),
                                   child: ElevatedButton.icon(
                                     onPressed: () {
-                                      double calculatedQuantity = double.parse(
-                                              quantityController.text) *
-                                          int.parse(
-                                              itemMultiplierController.text);
-                                      double calculatedPerUnitPrice =
-                                          double.parse((double.parse(
-                                                      costController.text) /
-                                                  (double.parse(
-                                                          quantityController
-                                                              .text) *
-                                                      int.parse(
-                                                          itemMultiplierController
-                                                              .text)))
-                                              .toStringAsFixed(4));
-                                      setState(() {
-                                        listOfItemsToCompare.add(
-                                          ItemToCompare(
-                                            // description
-                                            descriptionController.text,
-                                            // cost
-                                            costController.text,
-                                            // quantity
-                                            calculatedQuantity,
-                                            // unit
-                                            unitSelected,
-                                            // multiplier
-                                            itemMultiplierController.text,
-                                            // category
-                                            categorySelected,
-                                            // perunitprice
-                                            calculatedPerUnitPrice,
-                                          ),
-                                        );
-                                      });
+                                      if (_formKey.currentState!.validate()) {
+                                        double calculatedQuantity = double
+                                                .parse(
+                                                    quantityController.text) *
+                                            int.parse(
+                                                itemMultiplierController.text);
+                                        double calculatedPerUnitPrice =
+                                            double.parse((double.parse(
+                                                        costController.text) /
+                                                    (double.parse(
+                                                            quantityController
+                                                                .text) *
+                                                        int.parse(
+                                                            itemMultiplierController
+                                                                .text)))
+                                                .toStringAsFixed(4));
+                                        setState(() {
+                                          listOfItemsToCompare.add(
+                                            ItemToCompare(
+                                              // description
+                                              descriptionController.text,
+                                              // cost
+                                              costController.text,
+                                              // quantity
+                                              calculatedQuantity,
+                                              // unit
+                                              unitSelected,
+                                              // multiplier
+                                              itemMultiplierController.text,
+                                              // category
+                                              categorySelected,
+                                              // perunitprice
+                                              calculatedPerUnitPrice,
+                                            ),
+                                          );
+                                        });
 
-                                      // Sort items by the perunitprice property
-                                      listOfItemsToCompare.sort((a, b) => a
-                                          .perunitprice
-                                          .compareTo(b.perunitprice));
+                                        // Sort items by the perunitprice property
+                                        listOfItemsToCompare.sort((a, b) => a
+                                            .perunitprice
+                                            .compareTo(b.perunitprice));
 
-                                      // Clear the "Add Item" form fields
-                                      clearAddItemFields();
-                                      Navigator.pop(context);
+                                        // Clear the "Add Item" form fields
+                                        clearAddItemFields();
+                                        Navigator.pop(context);
+                                      }
                                     },
                                     label: const Text('Add Item to compare'),
                                     icon: const Icon(
@@ -452,45 +459,51 @@ class _AppLandingPageState extends State<AppLandingPage> {
         shrinkWrap: true,
         itemBuilder: (BuildContext context, int index) {
           return Dismissible(
-              key: Key(listOfItemsToCompare[index].description),
-              onDismissed: (direction) {
-                // Remove the item from the data source.
-                setState(() {
+            key: Key(listOfItemsToCompare[index].description),
+            onDismissed: (direction) {
+              // Remove the item from the data source.
+              setState(
+                () {
                   listOfItemsToCompare.removeAt(index);
-                });
+                },
+              );
 
-                // Then show a snackbar.
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Item Removed')));
-              },
-              background: Container(
-                alignment: Alignment.centerRight,
-                color: Colors.red,
-                child: const Padding(
-                  padding: EdgeInsets.all(32.0),
-                  child: Icon(
-                    Icons.delete_sweep_outlined,
-                    color: Colors.white,
-                    size: 40,
-                  ),
+              // Then show a snackbar.
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Item Removed'),
+                ),
+              );
+            },
+            background: Container(
+              alignment: Alignment.centerRight,
+              color: Colors.red,
+              child: const Padding(
+                padding: EdgeInsets.all(32.0),
+                child: Icon(
+                  Icons.delete_sweep_outlined,
+                  color: Colors.white,
+                  size: 40,
                 ),
               ),
-              child: DisplayItem(
-                itemRank: index + 1,
-                relativeDifference: double.parse(
-                    (((listOfItemsToCompare[index].perunitprice -
-                                    listOfItemsToCompare[0].perunitprice) /
-                                listOfItemsToCompare[0].perunitprice) *
-                            100)
-                        .toStringAsFixed(3)),
-                itemdescription: listOfItemsToCompare[index].description,
-                itemCost: listOfItemsToCompare[index].cost,
-                itemQuantity: listOfItemsToCompare[index].quantity,
-                itemUnit: listOfItemsToCompare[index].unit,
-                itemMultiplier: listOfItemsToCompare[index].multiplier,
-                itemCategory: listOfItemsToCompare[index].category,
-                itemPerUnitPrice: listOfItemsToCompare[index].perunitprice,
-              ));
+            ),
+            child: DisplayItem(
+              itemRank: index + 1,
+              relativeDifference: double.parse(
+                  (((listOfItemsToCompare[index].perunitprice -
+                                  listOfItemsToCompare[0].perunitprice) /
+                              listOfItemsToCompare[0].perunitprice) *
+                          100)
+                      .toStringAsFixed(3)),
+              itemdescription: listOfItemsToCompare[index].description,
+              itemCost: listOfItemsToCompare[index].cost,
+              itemQuantity: listOfItemsToCompare[index].quantity,
+              itemUnit: listOfItemsToCompare[index].unit,
+              itemMultiplier: listOfItemsToCompare[index].multiplier,
+              itemCategory: listOfItemsToCompare[index].category,
+              itemPerUnitPrice: listOfItemsToCompare[index].perunitprice,
+            ),
+          );
         },
       ),
     );
